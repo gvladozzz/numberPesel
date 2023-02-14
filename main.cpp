@@ -2,10 +2,21 @@
 
 using namespace std;
 
+string calculateNumerPesel(int year, int month, int day){
+    string years, months, days;
+    string pesel;
+    years = to_string(year);
+    months = to_string(month);
+    days = to_string(day);
+    years = erase(0, 2);
+    pesel = years;
+    
+    
+    return pesel;
+}
+
 int main(){
     int year, month, day;
-    int pesel[11]={0};
-    int peselLength = sizeof(pesel) / sizeof(int);
     cout << endl << "Enter your year of birth: (example: 1980): ";
     cin >> year;
     while(true){
@@ -33,9 +44,8 @@ int main(){
             cout << endl << "Try again: ";
             cin >> day;
     }
+    calculateNumerPesel(year, month, day);
     
-    cout << endl << "Pesel: ";
-    for (int i = 0; i <= peselLength; i++)
-        cout << pesel[i];
+    cout << endl << "Pesel: " << calculateNumerPesel(year, month, day);
     return 0;
 }
