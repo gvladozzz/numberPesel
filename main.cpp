@@ -5,14 +5,17 @@
 
 using namespace std;
 
-void calculateNumerPesel(int year, int month, int day, string gender) {
+string calculateNumerPesel(int year, int month, int day, string gender) {
     srand(time(NULL));
     int arr[10] = { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
-    int sum[10] = { 0 };
+    int sum[10];
+    int peselINT[10];
+    int lastNumberInt;
     string man[5] = {"1", "3", "5", "7", "9"};
     string woman[5] = {"0", "2", "4", "6", "8"};
-    string data[10];
-    string years, months, days, pesel, randomNumbers;
+    string years, months, days, pesel, randomNumbers, str;
+    string sumstr[10];
+    string sumstr2[10];
     years = to_string(year);
     month = month + 20;
     months = to_string(month);
@@ -22,36 +25,29 @@ void calculateNumerPesel(int year, int month, int day, string gender) {
     pesel += months;
     pesel += days;
     for (int i = 0; i < 3; i++)
-        randomNumbers += to_string(rand() % 9 + 0);
-    pesel += randomNumbers;
-    if (gender == "m" || gender == "M") 
+        pesel += to_string(rand() % 9 + 0);
+    if (gender == "m" || gender == "M")
         pesel += man[rand() % 4 + 0];
     else
         pesel += woman[rand() % 4 + 0];
 
-
-    for (int i = 0; i < 10; i++) {
-        sum[i] = arr[i] * pesel[i];
-
-        //if (sizeof(to_string(sum[i])) / sizeof(to_string(sum[i][0])) > 1) {
-        //    to_string(sum[i]).erase(0, sizeof(to_string(sum[i]) / sizeof(to_string(sum[i])));
-        //}
+    for (int i = 0; i < 10; i++){
+        str = pesel[i];
+        peselINT[i] = stoi(str);
+        sum[i] = arr[i]*peselINT[i];
+        sumstr[i] = to_string(sum[i]);
+        int len = sumstr[i].size();
+        if (len > 1) {
+            sumstr[i].erase(0, len-1);
+        }
+        str = sumstr[i];
+        arr[i] = stoi(str);
+        lastNumberInt += arr[i];
     }
-    
-    for (int i = 0; i < 10; i++) {
-        cout << sum[i]<< ' ';
-    }
-    cout << endl;
-
-    for (int i = 0; i < 10; i++) {
-        cout << pesel[i] << ' ';
-    }
-           
-
-    /*return pesel;*/
+    return pesel;
 }
 
-void main() {
+int main() {
     int year, month, day;
     string gender;
     cout << endl << "Enter your gender\nm - if you are man;\nw - if you are woman.\n: ";
@@ -91,9 +87,7 @@ void main() {
         cin >> day;
     }
     calculateNumerPesel(year, month, day, gender);
-    //string pesel = calculateNumerPesel(year, month, day, gender);
-
-    //cout << endl << "Pesel: " << pesel;
-    ///*for (int i = 0; i < (sizeof(pesel) / sizeof(pesel[0]))- 3; i++)
-    //    cout << endl << pesel[i];*/
+    string pesel = calculateNumerPesel(year, month, day, gender);
+    cout << endl << "Pesel: " << pesel;
+    return 0;
 }
