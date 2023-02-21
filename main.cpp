@@ -5,12 +5,12 @@
 
 using namespace std;
 
-string calculateNumerPesel(int year, int month, int day, string gender) {
+void calculateNumerPesel(int year, int month, int day, string gender) {
     srand(time(NULL));
     int arr[10] = { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
     int sum[10];
     int peselINT[10];
-    int lastNumberInt;
+    int lastNumberInt, lastNumber;
     string man[5] = {"1", "3", "5", "7", "9"};
     string woman[5] = {"0", "2", "4", "6", "8"};
     string years, months, days, pesel, randomNumbers, str;
@@ -31,6 +31,7 @@ string calculateNumerPesel(int year, int month, int day, string gender) {
     else
         pesel += woman[rand() % 4 + 0];
 
+
     for (int i = 0; i < 10; i++){
         str = pesel[i];
         peselINT[i] = stoi(str);
@@ -43,8 +44,17 @@ string calculateNumerPesel(int year, int month, int day, string gender) {
         str = sumstr[i];
         arr[i] = stoi(str);
         lastNumberInt += arr[i];
+        cout << lastNumberInt << " ";
     }
-    return pesel;
+    int numm;
+    int len = to_string(lastNumberInt).size();
+    if (len > 1) {
+        str = to_string(lastNumberInt).erase(0, len - 1);
+        numm = stoi(str);
+    }
+    str = to_string(10 - numm);
+    pesel += str;
+    cout << endl << "Pesel: " << pesel;
 }
 
 int main() {
@@ -87,7 +97,7 @@ int main() {
         cin >> day;
     }
     calculateNumerPesel(year, month, day, gender);
-    string pesel = calculateNumerPesel(year, month, day, gender);
-    cout << endl << "Pesel: " << pesel;
+    // string pesel = calculateNumerPesel(year, month, day, gender);
+    // cout << endl << "Pesel: " << pesel;
     return 0;
 }
